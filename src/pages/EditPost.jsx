@@ -34,6 +34,23 @@ const EditPost = ({ data }) => {
         window.location = "/"
     }
 
+    const deletePost = async (event) => {
+        // prevent page from automatically reloading
+        event.preventDefault()
+
+
+        // .from() to specify the Posts table
+        // delete operation to indicate we want to perform a delete operation
+        // .eq filter to ensure only the row with the matching id of the current post is deleted in the database
+        await supabase
+            .from('Posts')
+            .delete()
+            .eq('id', id)
+
+        // redirect back to root URL a.k.a the homepage
+        window.location = "/"
+    }
+
     return (
         <div>
             <form>
@@ -49,8 +66,10 @@ const EditPost = ({ data }) => {
                 <textarea rows="5" cols="50" id="description" name="description" value={post.description} onChange={handleChange} >
                 </textarea>
                 <br />
+                {/* button calls updatePost */}
                 <input type="submit" value="Submit" onClick={updatePost} />
-                <button className="deleteButton">Delete</button>
+                {/* button calls deletePost */}
+                <button className="deleteButton" onClick={deletePost}>Delete</button>
             </form>
         </div>
     )

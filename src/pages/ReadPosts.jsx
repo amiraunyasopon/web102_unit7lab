@@ -25,6 +25,7 @@ const ReadPosts = (props) => {
 
     return (
         <div className="ReadPosts">
+            {/* maps all the posts in the 'posts' variable */}
             {
                 posts && posts.length > 0 ?
                     [...posts]
