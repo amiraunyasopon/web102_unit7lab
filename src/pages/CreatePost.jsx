@@ -1,18 +1,32 @@
 import { useState } from 'react'
 import './CreatePost.css'
+import { supabase } from '../client'
 
 const CreatePost = () => {
 
-    const [post, setPost] = useState({title: "", author: "", description: ""})
+    const [post, setPost] = useState({ title: "", author: "", description: "" })
 
     const handleChange = (event) => {
-        const {name, value} = event.target
-        setPost( (prev) => {
+        const { name, value } = event.target
+        setPost((prev) => {
             return {
                 ...prev,
-                [name]:value,
+                [name]: value,
             }
         })
+    }
+
+    const createPost = async (event) => {
+        // prevent page from automatically reloading
+        event.preventDefault();
+
+        // specifying Posts table, passingan object with a title, author, and description
+        await supabase
+            .from('Posts')
+            .insert({ title: post.title, author: post.author, description: post.description })
+            .select()
+        // redirect back to root URL a.k.a the homepage
+        window.location = "/";
     }
 
     return (
@@ -20,17 +34,18 @@ const CreatePost = () => {
             <form>
                 <label htmlFor="title">Title</label> <br />
                 <input type="text" id="title" name="title" onChange={handleChange} /><br />
-                <br/>
+                <br />
 
                 <label htmlFor="author">Author</label><br />
                 <input type="text" id="author" name="author" onChange={handleChange} /><br />
-                <br/>
+                <br />
 
                 <label htmlFor="description">Description</label><br />
                 <textarea rows="5" cols="50" id="description" name="description" onChange={handleChange}>
                 </textarea>
-                <br/>
-                <input type="submit" value="Submit" />
+                <br />
+                {/* button calls createPost */}
+                <input type="submit" value="Submit" onClick={createPost} />
             </form>
         </div>
     )
