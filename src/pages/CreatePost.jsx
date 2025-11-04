@@ -25,6 +25,7 @@ const CreatePost = () => {
             .from('Posts')
             .insert({ title: post.title, author: post.author, description: post.description })
             .select()
+
         // redirect back to root URL a.k.a the homepage
         window.location = "/";
     }
