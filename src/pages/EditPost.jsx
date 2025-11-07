@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom'
 import './EditPost.css'
 import { supabase } from '../client'
 
-const EditPost = ({ data }) => {
+const EditPost = () => {
 
     const { id } = useParams()
     const [post, setPost] = useState({ id: null, title: "", author: "", description: "" })
